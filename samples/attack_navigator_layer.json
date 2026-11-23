@@ -1,0 +1,121 @@
+{
+  "name": "Sysmon Detection Engine - findings",
+  "domain": "enterprise-attack",
+  "versions": {
+    "layer": "4.5",
+    "navigator": "4.9.1"
+  },
+  "description": "Red = detected in this dataset; light blue = covered by a rule but not triggered.",
+  "techniques": [
+    {
+      "techniqueID": "T1003.001",
+      "score": 2,
+      "comment": "LSASS Dump via comsvcs.dll MiniDump; Suspicious Process Access to LSASS",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1027",
+      "score": 1,
+      "comment": "PowerShell Encoded Command",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1033",
+      "score": 3,
+      "comment": "Account and Domain Discovery Commands",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1053.005",
+      "score": 1,
+      "comment": "Scheduled Task Created Pointing to User-Writable Path",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1059.001",
+      "score": 2,
+      "comment": "PowerShell Download Cradle; PowerShell Encoded Command",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1071.001",
+      "score": 1,
+      "comment": "PowerShell Network Connection to Public IP",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1087.002",
+      "score": 3,
+      "comment": "Account and Domain Discovery Commands",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1105",
+      "score": 2,
+      "comment": "Certutil Used to Download or Decode Files; PowerShell Download Cradle",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1140",
+      "score": 1,
+      "comment": "Certutil Used to Download or Decode Files",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1204.002",
+      "score": 1,
+      "comment": "Office Application Spawning Script Interpreter",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1218.005",
+      "score": 0,
+      "comment": "Rule coverage only (not triggered)",
+      "color": "#d9e7f5"
+    },
+    {
+      "techniqueID": "T1218.011",
+      "score": 0,
+      "comment": "Rule coverage only (not triggered)",
+      "color": "#d9e7f5"
+    },
+    {
+      "techniqueID": "T1482",
+      "score": 3,
+      "comment": "Account and Domain Discovery Commands",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1490",
+      "score": 1,
+      "comment": "Volume Shadow Copy Deletion or Recovery Disabled",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1547.001",
+      "score": 2,
+      "comment": "File Dropped in Startup Folder; Run Key Persistence Pointing to Suspicious Location",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1562.001",
+      "score": 1,
+      "comment": "Microsoft Defender Disabled or Exclusion Added",
+      "color": ""
+    },
+    {
+      "techniqueID": "T1566.001",
+      "score": 1,
+      "comment": "Office Application Spawning Script Interpreter",
+      "color": ""
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#ffffff",
+      "#ff6666"
+    ],
+    "minValue": 0,
+    "maxValue": 3
+  }
+}

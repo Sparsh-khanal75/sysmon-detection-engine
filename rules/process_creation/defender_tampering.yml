@@ -1,0 +1,11 @@
+id: 2add896f-e1c4-5f34-91c1-d2674b550596
+title: Microsoft Defender Disabled or Exclusion Added
+level: high
+description: PowerShell used to switch off Defender real-time protection or add an exclusion so a payload is not scanned.
+tags: [attack.defense-evasion, attack.t1562.001]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  sel:
+    CommandLine|contains: ['DisableRealtimeMonitoring $true', 'DisableRealtimeMonitoring 1', 'Add-MpPreference -ExclusionPath', 'Add-MpPreference -ExclusionProcess']
+  condition: sel
+falsepositives: [Developers excluding build folders - should go through change control]

@@ -1,0 +1,15 @@
+id: 94343963-b876-5303-b7c4-b0591dc29d04
+title: Certutil Used to Download or Decode Files
+level: high
+description: certutil.exe abused as a living-off-the-land binary (LOLBin) to download or decode a payload.
+tags: [attack.command-and-control, attack.defense-evasion, attack.t1105, attack.t1140]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  img:
+    Image|endswith: '\certutil.exe'
+  download:
+    CommandLine|contains: ['urlcache', 'verifyctl']
+  decode:
+    CommandLine|contains: ['-decode', '/decode']
+  condition: img and (download or decode)
+falsepositives: [Certificate administrators using -urlcache to inspect CRLs]

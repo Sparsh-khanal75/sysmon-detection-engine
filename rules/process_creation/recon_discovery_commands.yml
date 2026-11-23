@@ -1,0 +1,18 @@
+id: e703e30c-e027-5860-b88d-8040af7ae229
+title: Account and Domain Discovery Commands
+level: medium
+description: Built-in tools used to enumerate the current user, privileged groups or domain trusts - usually the first thing an attacker does after landing.
+tags: [attack.discovery, attack.t1033, attack.t1087.002, attack.t1482]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  whoami:
+    Image|endswith: '\whoami.exe'
+    CommandLine|contains: ['/all', '/priv', '/groups']
+  net_groups:
+    Image|endswith: ['\net.exe', '\net1.exe']
+    CommandLine|contains: ['domain admins', 'enterprise admins', 'group /domain', 'user /domain']
+  trusts:
+    Image|endswith: '\nltest.exe'
+    CommandLine|contains: ['/dclist', '/domain_trusts', '/all_trusts']
+  condition: whoami or net_groups or trusts
+falsepositives: [Helpdesk and admin troubleshooting]

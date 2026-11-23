@@ -1,0 +1,15 @@
+id: d7d4c318-6ca5-5b6e-ab16-d1ee6987e745
+title: PowerShell Download Cradle
+level: high
+description: PowerShell downloading content from the network, often followed by in-memory execution (IEX).
+tags: [attack.execution, attack.command-and-control, attack.t1059.001, attack.t1105]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  ps:
+    Image|endswith: ['\powershell.exe', '\pwsh.exe']
+  download:
+    CommandLine|contains: ['DownloadString', 'DownloadFile', 'Net.WebClient', 'Invoke-WebRequest', 'Start-BitsTransfer', 'iwr http']
+  download_decoded:  # populated by the engine's enrichment step from -EncodedCommand
+    CommandLineDecoded|contains: ['DownloadString', 'DownloadFile', 'Net.WebClient', 'Invoke-WebRequest', 'Start-BitsTransfer']
+  condition: ps and (download or download_decoded)
+falsepositives: [Admin scripts that fetch updates - verify the destination URL]

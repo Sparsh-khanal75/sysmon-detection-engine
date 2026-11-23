@@ -1,0 +1,15 @@
+id: 917857c7-feb0-5595-9cec-65b5045f9128
+title: Run Key Persistence Pointing to Suspicious Location
+level: high
+description: A Run / RunOnce registry value was set to launch a program from a user-writable path or a script interpreter at every logon.
+tags: [attack.persistence, attack.t1547.001]
+logsource: {product: windows, service: sysmon, event_ids: [13]}
+detection:
+  key:
+    TargetObject|contains: ['\CurrentVersion\Run\', '\CurrentVersion\RunOnce\']
+  susp:
+    Details|contains: ['\AppData\', '\Temp\', '\Users\Public\', 'powershell', 'mshta', 'rundll32', 'wscript']
+  filter_known_apps:
+    Details|contains: ['\Microsoft\OneDrive\OneDrive.exe', '\Microsoft\Teams\Update.exe']
+  condition: key and susp and not filter_known_apps
+falsepositives: [Other per-user installs of chat or sync clients - extend filter_known_apps]

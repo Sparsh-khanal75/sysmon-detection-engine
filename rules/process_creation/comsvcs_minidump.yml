@@ -1,0 +1,11 @@
+id: ebd01da9-e42e-5162-90a8-60ec69f46937
+title: LSASS Dump via comsvcs.dll MiniDump
+level: critical
+description: rundll32 calling the MiniDump export of comsvcs.dll, a well-known way to dump LSASS memory without dedicated tools.
+tags: [attack.credential-access, attack.t1003.001]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  sel:
+    CommandLine|contains|all: ['comsvcs', 'MiniDump']
+  condition: sel
+falsepositives: [None known]

@@ -1,0 +1,14 @@
+id: f14f27e1-0fe5-501f-bca0-44d9a9d1826f
+title: PowerShell Network Connection to Public IP
+level: medium
+description: powershell.exe initiated a connection to a non-private address, which may be C2 or payload retrieval.
+tags: [attack.command-and-control, attack.t1071.001]
+logsource: {product: windows, service: sysmon, event_ids: [3]}
+detection:
+  sel:
+    Image|endswith: ['\powershell.exe', '\pwsh.exe']
+    Initiated: 'true'
+  filter_private:
+    DestinationIp|re: '^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.|127\.|169\.254\.)'
+  condition: sel and not filter_private
+falsepositives: [PowerShell Gallery / module updates - allowlist known hosts]

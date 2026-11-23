@@ -1,0 +1,15 @@
+id: 18470525-29d8-5fbc-8bde-291948ebe965
+title: Mshta or Rundll32 Executing Remote or Script Content
+level: high
+description: Signed Windows binaries used to proxy execution of scripts or remote content (defense evasion).
+tags: [attack.defense-evasion, attack.t1218.005, attack.t1218.011]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  mshta:
+    Image|endswith: '\mshta.exe'
+    CommandLine|contains: ['http://', 'https://', 'javascript:', 'vbscript:']
+  rundll32:
+    Image|endswith: '\rundll32.exe'
+    CommandLine|contains: ['javascript:', 'http://', 'https://', 'url.dll,OpenURL']
+  condition: mshta or rundll32
+falsepositives: [Legacy HTA-based internal tools]

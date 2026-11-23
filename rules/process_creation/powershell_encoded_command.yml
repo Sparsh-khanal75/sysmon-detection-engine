@@ -1,0 +1,13 @@
+id: 7415b7ee-529a-5290-b04c-eb952c1792af
+title: PowerShell Encoded Command
+level: high
+description: PowerShell launched with a Base64-encoded command, commonly used to hide payloads from command-line logging.
+tags: [attack.execution, attack.defense-evasion, attack.t1059.001, attack.t1027]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  ps:
+    Image|endswith: ['\powershell.exe', '\pwsh.exe']
+  enc:
+    CommandLine|re: '\s[-/](e|ec|en|enc|enco|encod|encodedcommand)\s+[A-Za-z0-9+/=]{20,}'
+  condition: ps and enc
+falsepositives: [Some management agents (SCCM, Intune scripts) - tune by parent process]

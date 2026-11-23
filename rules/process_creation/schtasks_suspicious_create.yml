@@ -1,0 +1,16 @@
+id: dbc29449-d26a-5cec-b595-bfbb6e3ae059
+title: Scheduled Task Created Pointing to User-Writable Path
+level: high
+description: A scheduled task was created that runs a binary or script from a user-writable directory, a common persistence technique.
+tags: [attack.persistence, attack.execution, attack.t1053.005]
+logsource: {product: windows, service: sysmon, event_ids: [1]}
+detection:
+  create:
+    Image|endswith: '\schtasks.exe'
+    CommandLine|contains: '/create'
+  susp_path:
+    CommandLine|contains: ['\AppData\', '\Temp\', '\Users\Public\', '\ProgramData\', 'powershell']
+  filter_installer:
+    ParentImage|endswith: '\msiexec.exe'
+  condition: create and susp_path and not filter_installer
+falsepositives: [Software updaters installed per-user (e.g. browsers) - allowlist by task name]

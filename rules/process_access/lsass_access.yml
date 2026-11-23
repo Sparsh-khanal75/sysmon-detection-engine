@@ -1,0 +1,14 @@
+id: 5a74584c-4c0a-5a2d-a807-c7eb6bb629fd
+title: Suspicious Process Access to LSASS
+level: critical
+description: A process opened LSASS with memory-read rights. Credential dumpers (Mimikatz, procdump, comsvcs) need this access.
+tags: [attack.credential-access, attack.t1003.001]
+logsource: {product: windows, service: sysmon, event_ids: [10]}
+detection:
+  target:
+    TargetImage|endswith: '\lsass.exe'
+    GrantedAccess: ['0x1010', '0x1410', '0x1438', '0x143a', '0x1fffff']
+  filter_security_tools:
+    SourceImage|endswith: ['\MsMpEng.exe', '\csrss.exe', '\wininit.exe', '\svchost.exe']
+  condition: target and not filter_security_tools
+falsepositives: [EDR and AV agents not in the filter list - add them after validation]

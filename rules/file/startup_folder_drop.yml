@@ -1,0 +1,13 @@
+id: 6aecace0-81ea-58d1-ad07-9c67c6b85c53
+title: File Dropped in Startup Folder
+level: medium
+description: A file was written to a Startup folder, so it will run at the next user logon.
+tags: [attack.persistence, attack.t1547.001]
+logsource: {product: windows, service: sysmon, event_ids: [11]}
+detection:
+  sel:
+    TargetFilename|contains: '\Start Menu\Programs\Startup\'
+  filter_installers:
+    Image|endswith: ['\msiexec.exe', '\OneDriveSetup.exe']
+  condition: sel and not filter_installers
+falsepositives: [Software installers creating shortcuts]

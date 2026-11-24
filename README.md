@@ -124,3 +124,7 @@ tests/                  14 unit and end-to-end tests
 - Planned: run the public [Sigma rule repository](https://github.com/SigmaHQ/sigma) against [OTRF Security-Datasets](https://github.com/OTRF/Security-Datasets) recordings to measure detection coverage on real attack telemetry.
 
 > The sample data is synthetic and uses RFC 5737 documentation IP addresses.
+
+## Author
+
+**Sparsh Khanal** · [GitHub](https://github.com/Sparsh-khanal75) · [LinkedIn](https://www.linkedin.com/in/Sparsh-khanal75)

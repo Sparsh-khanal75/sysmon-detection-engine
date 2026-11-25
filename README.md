@@ -2,7 +2,7 @@
 
 A detection engine for Windows **Sysmon** logs. It runs YAML detection rules written in a **Sigma-compatible** format, decodes obfuscated PowerShell, rebuilds the **process tree**, and groups alerts into **incidents** that show how an attack progressed through MITRE ATT&CK. It can export an **ATT&CK Navigator** layer.
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python) ![Rules](https://img.shields.io/badge/rules-14-informational) ![Techniques](https://img.shields.io/badge/ATT%26CK%20techniques-17-red) ![Tests](https://img.shields.io/badge/tests-14%20passing-success)
+![CI](https://github.com/Sparsh-khanal75/sysmon-detection-engine/actions/workflows/ci.yml/badge.svg) ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python) ![Rules](https://img.shields.io/badge/rules-14-informational) ![Techniques](https://img.shields.io/badge/ATT%26CK%20techniques-17-red) ![Tests](https://img.shields.io/badge/tests-14%20passing-success)
 
 ## Why
 

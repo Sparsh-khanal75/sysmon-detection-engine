@@ -6,6 +6,7 @@ process tree, and group alerts into incidents ordered along the ATT&CK kill chai
 Usage:
   python hunt.py samples/attack_chain.jsonl
   python hunt.py events.jsonl --rules rules --json alerts.json --navigator layer.json
+  python hunt.py samples/attack_chain.jsonl --html report.html
   python hunt.py --list-rules
 """
 from __future__ import annotations
@@ -55,6 +56,7 @@ def main(argv=None) -> int:
     ap.add_argument("--rules", default="rules")
     ap.add_argument("--json", help="write alerts as JSON")
     ap.add_argument("--navigator", help="write a MITRE ATT&CK Navigator layer")
+    ap.add_argument("--html", help="write a self-contained HTML dashboard report")
     ap.add_argument("--list-rules", action="store_true")
     ap.add_argument("--no-color", action="store_true")
     args = ap.parse_args(argv)
@@ -122,6 +124,11 @@ def main(argv=None) -> int:
         with open(args.navigator, "w") as fh:
             json.dump(navigator_layer(alerts, rules), fh, indent=2)
         print(f"ATT&CK Navigator layer written to {args.navigator} (open at https://mitre-attack.github.io/attack-navigator/)")
+    if args.html:
+        from engine.dashboard import write_dashboard
+
+        write_dashboard(args.html, events, rules, alerts, incidents, tree, args.events)
+        print(f"HTML report written to {args.html}")
     return 2 if any(a.rule.level == "critical" for a in alerts) else 0
 
 

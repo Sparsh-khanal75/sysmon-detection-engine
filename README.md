@@ -44,6 +44,16 @@ $ python hunt.py samples/attack_chain.jsonl
 
 Result: **15 true-positive alerts, 0 false positives, all correlated into a single incident** with a readable attack story. The pattern (macro, then a PowerShell loader, credential theft, then shadow-copy deletion) is a classic ransomware precursor.
 
+## Screenshots
+
+**Terminal:** replaying the bundled attack chain, a phishing document that leads to credential dumping and shadow-copy deletion.
+
+![sysmon-detection-engine terminal output](docs/screenshots/terminal.png)
+
+**HTML report (`--html report.html`):** a self-contained dashboard with alerts by ATT&CK tactic and technique, the reconstructed process tree for each incident and an alert timeline you can filter.
+
+![sysmon-detection-engine HTML dashboard](docs/screenshots/html-report.png)
+
 ## Features
 
 | Feature | Detail |
@@ -98,6 +108,7 @@ detection:
 pip install -r requirements.txt
 python hunt.py samples/attack_chain.jsonl
 python hunt.py events.jsonl --json alerts.json --navigator layer.json
+python hunt.py events.jsonl --html report.html     # self-contained HTML dashboard
 python hunt.py --list-rules
 python -m unittest discover -s tests
 ```

@@ -112,5 +112,25 @@ class EndToEndTests(unittest.TestCase):
         self.assertEqual(inc.tactics[-1], "impact")
 
 
+class DashboardTests(unittest.TestCase):
+    def test_html_dashboard_has_timeline_and_process_tree(self):
+        import tempfile
+
+        from engine.dashboard import write_dashboard
+
+        events = enrich(load_events(ROOT / "samples" / "attack_chain.jsonl"))
+        tree = ProcessTree(events)
+        alerts = detect(events, RULES)
+        incidents = build_incidents(alerts, tree)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "report.html"
+            write_dashboard(str(out), events, RULES, alerts, incidents, tree, "attack_chain.jsonl")
+            page = out.read_text(encoding="utf-8")
+        self.assertIn("Sysmon detection report", page)
+        self.assertIn("Incident 1", page)
+        self.assertIn("LSASS", page)
+        self.assertIn("WINWORD.EXE", page)
+
+
 if __name__ == "__main__":
     unittest.main()
